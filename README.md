@@ -5,7 +5,7 @@ A modern, responsive personal portfolio website built to showcase my skills, pro
 ## 🌐 Live Demo
 You can view the live site here: **https://my-portfolio-seven-lilac-5kq6e3rq7b.vercel.app/**
 
-## ✨ Features
+##  Features
 * **Animated Profile:** Features a custom CSS-animated rotating ring around the headshot.
 * **Responsive Design:** Fully optimized for mobile devices using Flexbox and Media Queries.
 * **Interactive UI:** Includes a bouncing scroll-down indicator and hover effects on social links.
@@ -13,14 +13,14 @@ You can view the live site here: **https://my-portfolio-seven-lilac-5kq6e3rq7b.v
     * CSS3 (Custom animations & Flexbox)
     * Font Awesome (Vector icons)
 
-## 🛠️ Built With
+##  Built With
 * **Acode:** Mobile code editor for Android.
 * **Vercel:** Deployment and hosting platform.
 * **GitHub:** Version control and repository management.
 
-## 📂 Project Structure
+##  Project Structure
 ```text
 ├── index.html       # Main structure of the site
 ├── style.css        # Custom styling and animations
-├── assets/          # Project images and icons
+├── other.webp files          # Project images and icons
 └── README.md        # Project documentation

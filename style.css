@@ -13,6 +13,7 @@
 html {
   scroll-behavior: smooth;
   overflow-y: scroll;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -120,8 +121,8 @@ nav .right a span {
 .hero-section .headshot img {
   border-radius: 50%;
   animation: scaleIn 0.5s ease-out both;
-  width: 300px;
-  height: 300px;
+  width: 310px;
+  height: 310px;
   object-fit: cover;
   z-index: 2;
 }
@@ -142,8 +143,7 @@ nav .right a span {
 .quote-section {
   padding: 0 50px;
   margin-bottom: 100px;
-  height: 420px;
-  overflow: hidden;
+  contain: layout;
 }
 
 .quote-section h2 {
@@ -161,11 +161,10 @@ nav .right a span {
   padding: 36px 40px 28px;
   background: #fff;
   box-shadow: 0 4px 24px rgba(0,0,0,0.05);
-  height: 260px;
+  min-height: 260px;
   display: flex;
   flex-direction: column;
   gap: 0;
-  overflow: hidden;
 }
 
 .quote-card-header {
@@ -194,9 +193,8 @@ nav .right a span {
   font-weight: 500;
   line-height: 1.8;
   color: #1a1c20;
-  height: 100px;
-  overflow: hidden;
-  flex-shrink: 0;
+  min-height: 165px;
+  flex: 1;
   position: relative;
 }
 
@@ -633,8 +631,8 @@ nav .right a span {
   }
 
   .hero-section .headshot img {
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
   }
 
   .profile-ring {
@@ -680,7 +678,8 @@ nav .right a span {
   .projects-section { padding: 0 20px; }
   .contact-section  { padding: 0 20px; }
   .quote-section    { padding: 0 20px; }
-  .quote-card       { padding: 24px 20px 20px; }
+  .quote-card       { padding: 24px 20px 20px; min-height: 320px; }
+  .typewriter-text  { min-height: 220px; }
 }
 
 /* ─── KEYFRAMES ─── */
@@ -716,4 +715,3 @@ nav .right a span {
   60%  { transform: translateX(-50%) translateY(-5px); }
     }
 
-  

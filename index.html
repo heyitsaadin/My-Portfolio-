@@ -12,11 +12,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Boldonse&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Boldonse&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Boldonse&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Boldonse&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 
@@ -44,10 +44,9 @@
       </a>
       
       <a href="mailto:hey.itsaadin@gmail.com">
-    <i class="fa-solid fa-envelope"></i>
-    <span>Email</span>
-</a>
-
+        <i class="fa-solid fa-envelope"></i>
+        <span>Email</span>
+      </a>
     </div>
   </nav>
 
@@ -59,13 +58,16 @@
       </div>
       <div class="text">
         <h2>Hi I'm Aadin, </h2>
-        <p> A +2 student at PRM HSS Kollavalloor with a deep fascination for the intersection of logic and technology. Currently, I am focused on mastering web development while building a foundation for my ultimate goal: becoming an AI Engineer. I believe in the power of artificial intelligence to transform the world, and I’m constantly experimenting with new code to turn that vision into reality.</p>
-        
+        <p> A +2 student at PRM HSS Kollavalloor with a deep fascination for the intersection of logic and technology. Currently, I am focused on mastering web development while building a foundation for my ultimate goal: becoming an AI Engineer. I believe in the power of artificial intelligence to transform the world, and I'm constantly experimenting with new code to turn that vision into reality.</p>
         
         <div class="links">
           <a href="#skills">
             <i class="fa-solid fa-code"></i>
             <span>Skills</span>
+          </a>
+          <a href="#projects">
+            <i class="fa-solid fa-folder-open"></i>
+            <span>Projects</span>
           </a>
           <a href="#socials">
             <i class="fa-solid fa-envelope"></i>
@@ -75,15 +77,13 @@
       </div>
       
       <a href="#skills" class="scroll-down">
-    <i class="fa-solid fa-chevron-down"></i>
-</a>
+        <i class="fa-solid fa-chevron-down"></i>
+      </a>
 
-     
       <div class="headshot">
         <div class="profile-ring"></div> 
         <img src="1.webp" alt="">
       </div>
-       
     </section>
 
     <!-- SECTION 2: Skills -->
@@ -113,45 +113,130 @@
           <img src="python.webp" alt="node logo">
           <span>Python</span>
         </div>
-        
-        
       </div>
     </section>
 
-    
-  
+    <!-- SECTION 3: Projects -->
+    <section id="projects" class="projects-section">
+      <h2>Projects</h2>
+      <p class="projects-sub">things i've built while learning — real stuff, not just tutorials.</p>
+
+      <div class="projects-grid">
+
+        <!-- Jarvis AI Card -->
+        <div class="project-card jarvis-card">
+          <div class="card-header">
+            <div class="jarvis-logo">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+                <rect width="18" height="18" rx="3" fill="#1a1c20"/>
+                <rect x="22" width="18" height="18" rx="3" fill="#1a1c20"/>
+                <rect y="22" width="18" height="18" rx="3" fill="#1a1c20"/>
+                <rect x="22" y="22" width="18" height="18" rx="9" fill="#1a1c20"/>
+              </svg>
+            </div>
+            <div class="card-title-wrap">
+              <h3>Jarvis AI</h3>
+              <span class="card-tag">AI Chatbot</span>
+            </div>
+            <span class="card-status"><span class="dot"></span>Live</span>
+          </div>
+
+          <p class="card-desc">A personal AI chatbot powered by Groq LLaMA. Ask anything, get instant answers. Built with a clean dark UI and a sign-in flow.</p>
+
+          <!-- Screenshot slider -->
+          <div class="screenshot-slider">
+            <div class="slides">
+              <div class="slide active">
+                <img src="1000145275.webp" alt="Jarvis AI login screen desktop">
+                <span class="slide-label">Desktop Login</span>
+              </div>
+              <div class="slide">
+                <img src="1000145277.webp" alt="Jarvis AI login screen mobile">
+                <span class="slide-label">Mobile Login</span>
+              </div>
+              <div class="slide">
+                <img src="1000145278.webp" alt="Jarvis AI chat interface">
+                <span class="slide-label">Chat Interface</span>
+              </div>
+            </div>
+            <div class="slider-dots">
+              <button class="sdot active" data-idx="0"></button>
+              <button class="sdot" data-idx="1"></button>
+              <button class="sdot" data-idx="2"></button>
+            </div>
+          </div>
+
+          <div class="card-stack">
+            <span>Python</span>
+            <span>Groq API</span>
+            <span>LLaMA</span>
+            <span>HTML/CSS</span>
+          </div>
+
+          <div class="card-actions">
+            <a href="https://github.com/heyitsaadin" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+              <i class="fa-brands fa-github"></i> Source
+            </a>
+            <a href="https://github.com/heyitsaadin" target="_blank" rel="noopener noreferrer" class="btn-solid">
+              View Project <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- SECTION 4: Contact -->
     <section id="socials" class="contact-section">
       <h2>Socials:</h2>
-      
 
       <div class="social">
         <a href="https://www.instagram.com/its_n0t_aadin?igsh=YWRoaXZhNjBkcnNp" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-instagram"></i>
-        <span>Instagram</span>
+          <i class="fa-brands fa-instagram"></i>
+          <span>Instagram</span>
         </a>
         <a href="https://www.linkedin.com/in/aadin-kc-128bb3371?utm_source=share_via&utm_content=profile&utm_medium=member_android">
-        <i class="fa-brands fa-linkedin"></i>
-        <span>linkedin</span>
+          <i class="fa-brands fa-linkedin"></i>
+          <span>linkedin</span>
         </a>
         <a href="https://wa.me/9446734945" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-whatsapp"></i>
-        <span>Watsapp</span>
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>Watsapp</span>
         </a>
         <a href="https://x.com/its_aadin" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-square-twitter"></i>
-        <span>twitter</span>
+          <i class="fa-brands fa-square-twitter"></i>
+          <span>twitter</span>
         </a>
-        
         <a href="https://github.com/heyitsaadin">
-        <i class="fa-brands fa-github"></i>
-        <span>github</span>
+          <i class="fa-brands fa-github"></i>
+          <span>github</span>
         </a>
-      
       </div>  
-      
-     
     </section>
   </main>
+
+  <script>
+    // Screenshot slider logic
+    document.querySelectorAll('.project-card').forEach(card => {
+      const slides = card.querySelectorAll('.slide');
+      const dots = card.querySelectorAll('.sdot');
+      let current = 0;
+
+      function goTo(idx) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = idx;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => goTo(parseInt(dot.dataset.idx)));
+      });
+
+      // Auto-advance
+      setInterval(() => goTo((current + 1) % slides.length), 3000);
+    });
+  </script>
 </body>
 </html>

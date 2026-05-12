@@ -142,6 +142,8 @@ nav .right a span {
 .quote-section {
   padding: 0 50px;
   margin-bottom: 100px;
+  height: 420px;
+  overflow: hidden;
 }
 
 .quote-section h2 {
@@ -159,10 +161,11 @@ nav .right a span {
   padding: 36px 40px 28px;
   background: #fff;
   box-shadow: 0 4px 24px rgba(0,0,0,0.05);
-  min-height: 200px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   gap: 0;
+  overflow: hidden;
 }
 
 .quote-card-header {
@@ -191,10 +194,9 @@ nav .right a span {
   font-weight: 500;
   line-height: 1.8;
   color: #1a1c20;
-  min-height: 110px;
-  height: 145px;
+  height: 100px;
   overflow: hidden;
-  flex: none;
+  flex-shrink: 0;
   position: relative;
 }
 
@@ -714,4 +716,4 @@ nav .right a span {
   60%  { transform: translateX(-50%) translateY(-5px); }
     }
 
-
+  

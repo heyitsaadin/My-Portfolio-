@@ -20,26 +20,92 @@
 </head>
 <body>
 
+  <!-- TOP BLUR (shows on scroll) -->
+  <div class="top-blur" id="topBlur"></div>
+
   <!-- NAVBAR -->
   <nav>
     <div class="left">
       <a href="/">ABOUT ME</a>
     </div>
     <div class="right">
-      <a href="https://github.com/heyitsaadin" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-github"></i>
-        <span>Github</span>
-      </a>
-      <a href="https://www.linkedin.com/in/aadin-kc-128bb3371" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-linkedin"></i>
-        <span>Linkedin</span>
-      </a>
-      <a href="mailto:hey.itsaadin@gmail.com">
-        <i class="fa-solid fa-envelope"></i>
-        <span>Email</span>
-      </a>
+      <!-- Social pill -->
+      <div class="social-pill">
+        <a href="https://github.com/heyitsaadin" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <span class="pill-divider"></span>
+        <a href="https://www.linkedin.com/in/aadin-kc-128bb3371" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <span class="pill-divider"></span>
+        <a href="mailto:hey.itsaadin@gmail.com" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </div>
+
+      <!-- Hamburger toggle -->
+      <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span class="ham-text" id="hamText">Menu</span>
+        <span class="ham-icon" id="hamIcon">
+          <span class="bar bar1"></span>
+          <span class="bar bar2"></span>
+        </span>
+      </button>
     </div>
   </nav>
+
+  <!-- STAGGERED MENU OVERLAY -->
+  <div class="sm-overlay" id="menuOverlay" aria-hidden="true">
+    <div class="sm-prelayer-wrap" aria-hidden="true">
+      <div class="sm-prelayer" style="background:#e8e0f8;"></div>
+      <div class="sm-prelayer" style="background:#c9b8f0;"></div>
+    </div>
+    <aside class="sm-panel" id="menuPanel">
+      <div class="sm-panel-inner">
+        <ul class="sm-nav-list">
+          <li><a href="#skills" class="sm-nav-item" data-num="01">
+            <span class="sm-nav-label">Skills</span>
+          </a></li>
+          <li><a href="#projects" class="sm-nav-item" data-num="02">
+            <span class="sm-nav-label">Projects</span>
+          </a></li>
+          <li><a href="#socials" class="sm-nav-item" data-num="03">
+            <span class="sm-nav-label">Socials</span>
+          </a></li>
+        </ul>
+        <div class="sm-panel-socials">
+          <p class="sm-socials-title">Find me on</p>
+          <div class="sm-socials-links">
+            <a href="https://github.com/heyitsaadin" target="_blank" rel="noopener noreferrer" class="sm-social-link">
+              <span class="sm-social-icon"><i class="fa-brands fa-github"></i></span>
+              <span class="sm-social-info">
+                <span class="sm-social-name">GitHub</span>
+                <span class="sm-social-handle">heyitsaadin</span>
+              </span>
+              <span class="sm-social-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+            </a>
+            <a href="https://www.linkedin.com/in/aadin-kc-128bb3371" target="_blank" rel="noopener noreferrer" class="sm-social-link">
+              <span class="sm-social-icon"><i class="fa-brands fa-linkedin-in"></i></span>
+              <span class="sm-social-info">
+                <span class="sm-social-name">LinkedIn</span>
+                <span class="sm-social-handle">aadin-kc</span>
+              </span>
+              <span class="sm-social-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+            </a>
+            <a href="mailto:hey.itsaadin@gmail.com" class="sm-social-link">
+              <span class="sm-social-icon"><i class="fa-solid fa-envelope"></i></span>
+              <span class="sm-social-info">
+                <span class="sm-social-name">Email</span>
+                <span class="sm-social-handle">hey.itsaadin@gmail.com</span>
+              </span>
+              <span class="sm-social-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
 
   <main>
 
@@ -266,6 +332,143 @@
     }
 
     schedule();
+
+    // ── Bubble burst on nav buttons ──
+    document.querySelectorAll('.hero-section .text .links a').forEach(btn => {
+      btn.addEventListener('pointerdown', function(e) {
+        const rect = btn.getBoundingClientRect();
+        const cx = e.clientX - rect.left;
+        const cy = e.clientY - rect.top;
+
+        // 8 bubbles bursting in all directions
+        const count = 8;
+        for (let i = 0; i < count; i++) {
+          const angle = (i / count) * 2 * Math.PI;
+          const dist = 28 + Math.random() * 18;
+          const tx = Math.cos(angle) * dist;
+          const ty = Math.sin(angle) * dist;
+          const size = 5 + Math.random() * 4;
+          const delay = i * 18;
+
+          const dot = document.createElement('span');
+          dot.className = 'bubble-dot';
+          dot.style.cssText = `
+            width:${size}px;
+            height:${size}px;
+            left:${cx - size/2}px;
+            top:${cy - size/2}px;
+            --tx:${tx}px;
+            --ty:${ty}px;
+            animation-delay:${delay}ms;
+          `;
+          btn.appendChild(dot);
+          dot.addEventListener('animationend', () => dot.remove());
+        }
+      });
+    });
+  </script>
+
+  <!-- Bottom fade overlay -->
+  <div class="bottom-blur"></div>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+  // Top blur on scroll
+  (function() {
+    const topBlur = document.getElementById('topBlur');
+    const heroBottom = () => {
+      const hero = document.querySelector('.hero') || document.querySelector('nav');
+      return hero ? hero.getBoundingClientRect().bottom + window.scrollY + 40 : 200;
+    };
+    let threshold = null;
+    window.addEventListener('scroll', () => {
+      if (!threshold) threshold = heroBottom();
+      if (window.scrollY > threshold) {
+        topBlur.classList.add('visible');
+      } else {
+        topBlur.classList.remove('visible');
+      }
+    }, { passive: true });
+  })();
+
+  (function() {
+    const toggle    = document.getElementById('menuToggle');
+    const overlay   = document.getElementById('menuOverlay');
+    const panel     = document.getElementById('menuPanel');
+    const hamText   = document.getElementById('hamText');
+    const prelayers = Array.from(overlay.querySelectorAll('.sm-prelayer'));
+    const navLabels = Array.from(panel.querySelectorAll('.sm-nav-label'));
+    const socialTitle = panel.querySelector('.sm-socials-title');
+    const socialLinks = Array.from(panel.querySelectorAll('.sm-social-link'));
+
+    let isOpen = false;
+    let busy   = false;
+
+    gsap.set([...prelayers, panel], { xPercent: 100 });
+    gsap.set(overlay, { visibility: 'hidden' });
+    gsap.set(navLabels, { yPercent: 130, rotate: 8 });
+    gsap.set(socialTitle, { opacity: 0, y: 10 });
+    gsap.set(socialLinks, { opacity: 0, y: 20 });
+
+    function cycleText(dir) {
+      const seq = dir === 'open'
+        ? ['Menu','Close','Menu','Close','Close']
+        : ['Close','Menu','Close','Menu','Menu'];
+      let i = 0;
+      const iv = setInterval(() => {
+        hamText.textContent = seq[i++];
+        if (i >= seq.length) clearInterval(iv);
+      }, 60);
+    }
+
+    function openMenu() {
+      if (busy) return;
+      busy = true; isOpen = true;
+      toggle.setAttribute('aria-expanded', 'true');
+      overlay.style.visibility = 'visible';
+      cycleText('open');
+
+      gsap.to('.bar1', { rotate: 45,  y: 5,  duration: 0.4, ease: 'power3.out' });
+      gsap.to('.bar2', { rotate: -45, y: -5, duration: 0.4, ease: 'power3.out' });
+
+      const tl = gsap.timeline({ onComplete: () => { busy = false; } });
+      prelayers.forEach((l, i) => {
+        tl.fromTo(l, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07);
+      });
+      tl.fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 0.65, ease: 'power4.out' }, 0.12);
+      tl.to(navLabels, { yPercent: 0, rotate: 0, duration: 0.9, ease: 'power4.out', stagger: 0.1 }, 0.3);
+      tl.to(socialTitle, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.55);
+      tl.to(socialLinks, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08 }, 0.62);
+    }
+
+    function closeMenu() {
+      if (busy) return;
+      busy = true; isOpen = false;
+      toggle.setAttribute('aria-expanded', 'false');
+      cycleText('close');
+
+      gsap.to('.bar1', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
+      gsap.to('.bar2', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
+
+      gsap.to([...prelayers, panel], {
+        xPercent: 100, duration: 0.35, ease: 'power3.in', stagger: 0.03,
+        onComplete: () => {
+          overlay.style.visibility = 'hidden';
+          gsap.set(navLabels, { yPercent: 130, rotate: 8 });
+          gsap.set(socialTitle, { opacity: 0, y: 10 });
+          gsap.set(socialLinks, { opacity: 0, y: 20 });
+          busy = false;
+        }
+      });
+    }
+
+    toggle.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+    overlay.addEventListener('mousedown', e => { if (!panel.contains(e.target)) closeMenu(); });
+    panel.querySelectorAll('.sm-nav-item').forEach(l => l.addEventListener('click', closeMenu));
+  })();
   </script>
 </body>
 </html>
+
+  

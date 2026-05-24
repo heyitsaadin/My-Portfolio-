@@ -22,5 +22,5 @@ You can view the live site here: **https://aadinkc-portfolio.vercel.app/**
 ```text
 ├── index.html       # Main structure of the site
 ├── style.css        # Custom styling and animations
-├── other.webp files          # Project images and icons
+├── images        # Project images and icons
 └── README.md        # Project documentation

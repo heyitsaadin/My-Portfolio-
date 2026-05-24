@@ -3,7 +3,7 @@
 A modern, responsive personal portfolio website built to showcase my skills, projects, and contact information. This project is optimized for mobile and web views, featuring custom CSS animations and a clean UI/UX.
 
 ## 🌐 Live Demo
-You can view the live site here: **https://my-portfolio-seven-lilac-5kq6e3rq7b.vercel.app/**
+You can view the live site here: **aadinkc-potfolio.vercel.app**
 
 ##  Features
 * **Animated Profile:** Features a custom CSS-animated rotating ring around the headshot.

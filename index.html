@@ -698,6 +698,23 @@
       will-change: transform;
     }
 
+    /* ── ASCII nebula, behind headshot ── */
+    .ascii-bg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 460px;
+      height: 460px;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      animation: asciiFadeIn 1.4s ease 0.6s forwards;
+      -webkit-mask-image: radial-gradient(circle, #000 55%, transparent 78%);
+      mask-image: radial-gradient(circle, #000 55%, transparent 78%);
+    }
+    @keyframes asciiFadeIn { to { opacity: 1; } }
+
     /* scroll caret */
     .scroll-down {
       position: absolute;
@@ -1326,6 +1343,7 @@
       .hero-section .headshot img { width: 220px; height: 220px; }
       .profile-ring { width: 240px; height: 240px; }
       .profile-ring-2 { width: 265px; height: 265px; }
+      .ascii-bg { width: 320px; height: 320px; }
       .project-card { display: block; }
       .screenshot-slider { margin-bottom: 16px; height: auto; }
       .slides { aspect-ratio: 16/9; min-height: unset; flex: unset; }
@@ -1486,6 +1504,7 @@
       </a>
 
       <div class="headshot">
+        <canvas class="ascii-bg" id="asciiCanvas"></canvas>
         <div class="profile-ring-2"></div>
         <div class="profile-ring"></div>
         <img src="images/1.webp" alt="Aadin">
@@ -1877,6 +1896,95 @@
     backdrop.addEventListener('click', closeMenu);
     overlay.addEventListener('mousedown', e => { if (!panel.contains(e.target)) closeMenu(); });
     panel.querySelectorAll('.sm-nav-item').forEach(l => l.addEventListener('click', closeMenu));
+
+    /* ═══════════════════════════════════════
+       ASCII NEBULA — animated B&W character field
+       behind the headshot, contained to the hero
+    ═══════════════════════════════════════ */
+    (function asciiNebula() {
+      const canvas = document.getElementById('asciiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const CHARS = ' .\'`^",:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
+
+      let cell = 9;           // px per character cell
+      let cols = 0, rows = 0;
+      let cssW = 0, cssH = 0;
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+      // seeded pseudo-random gradient noise (value noise, 2 octaves) — no deps
+      function hash(x, y) {
+        const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+        return s - Math.floor(s);
+      }
+      function smooth(t) { return t * t * (3 - 2 * t); }
+      function valueNoise(x, y) {
+        const xi = Math.floor(x), yi = Math.floor(y);
+        const xf = x - xi, yf = y - yi;
+        const a = hash(xi, yi), b = hash(xi + 1, yi);
+        const c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+        const u = smooth(xf), v = smooth(yf);
+        return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+      }
+      function fbm(x, y) {
+        let total = 0, amp = 0.6, freq = 1, max = 0;
+        for (let o = 0; o < 3; o++) {
+          total += valueNoise(x * freq, y * freq) * amp;
+          max += amp;
+          amp *= 0.5;
+          freq *= 2.05;
+        }
+        return total / max;
+      }
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        cssW = rect.width; cssH = rect.height;
+        if (cssW === 0 || cssH === 0) return;
+        canvas.width = Math.floor(cssW * DPR);
+        canvas.height = Math.floor(cssH * DPR);
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        cell = cssW < 340 ? 7 : 9;
+        cols = Math.ceil(cssW / cell);
+        rows = Math.ceil(cssH / cell);
+        ctx.font = (cell + 1.5) + 'px monospace';
+        ctx.textBaseline = 'top';
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      let t = 0;
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function draw() {
+        if (cssW && cssH) {
+          ctx.clearRect(0, 0, cssW, cssH);
+          const cx = cols / 2, cy = rows / 2;
+          for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+              // swirl warp around center, like the nebula reference
+              const dx = x - cx, dy = y - cy;
+              const dist = Math.sqrt(dx * dx + dy * dy) / Math.max(cols, rows);
+              const angle = Math.atan2(dy, dx) + dist * 2.6 + t * 0.06;
+              const swirlX = cx + Math.cos(angle) * dist * cols;
+              const swirlY = cy + Math.sin(angle) * dist * rows;
+
+              let n = fbm(swirlX * 0.14 + t * 0.035, swirlY * 0.14 - t * 0.02);
+              n = n * (1 - dist * 0.65); // fade toward edges
+              const idx = Math.max(0, Math.min(CHARS.length - 1, Math.floor(n * CHARS.length)));
+              if (idx < 1) continue; // skip near-empty cells for a lighter field
+              const ch = CHARS[idx];
+              const shade = Math.floor(30 + n * 60); // greyscale value
+              ctx.fillStyle = 'rgba(' + shade + ',' + shade + ',' + shade + ',' + (0.5 + n * 0.4) + ')';
+              ctx.fillText(ch, x * cell, y * cell);
+            }
+          }
+        }
+        t += reduceMotion ? 0 : 0.6;
+        requestAnimationFrame(draw);
+      }
+      requestAnimationFrame(draw);
+    })();
   })();
   </script>
 

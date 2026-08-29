@@ -934,27 +934,11 @@
     .projects-section {
       padding: 0 50px;
       margin-bottom: 140px;
-      position: relative;
     }
 
     .projects-section-header { margin-bottom: 54px; }
 
-    .projects-grid { 
-      position: relative; 
-      min-height: 500px;
-    }
-    
-    .projects-grid.pinned {
-      position: relative;
-    }
-    
-    .projects-grid.pinned .project-card {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-    }
+    .projects-grid { display: flex; flex-direction: column; gap: 32px; }
 
     .project-card {
       border: 1.5px solid var(--border);
@@ -1778,7 +1762,6 @@
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
   (function() {
@@ -1981,56 +1964,18 @@
       }
     });
 
-// Projects section — pin & sequential card reveal
-    const projectsSection = document.querySelector('.projects-section');
-    const projectsGrid = document.querySelector('.projects-grid');
-    const cards = gsap.utils.toArray('.project-card');
-    
-    console.log('Projects section:', projectsSection);
-    console.log('Projects grid:', projectsGrid);
-    console.log('Cards found:', cards.length, cards);
-    
-    if (cards.length === 0) {
-      console.error('No project cards found!');
-    }
-    
-    // Initially hide all cards
-    gsap.set(cards, { y: 100, opacity: 0 });
-    
-    // Create a timeline for the sequential reveal
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: projectsSection,
-        start: "top top",
-        end: () => `+=${cards.length * 600}`,
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-        onEnter: () => {
-          console.log('Pin entered');
-          projectsGrid.classList.add('pinned');
-        },
-        onLeaveBack: () => {
-          console.log('Pin leave back');
-          projectsGrid.classList.remove('pinned');
-        },
-        onLeave: () => {
-          console.log('Pin leave - animation complete');
-          gsap.set(cards, { y: 0, opacity: 1, position: 'relative', width: 'auto', left: 'auto', right: 'auto', zIndex: 'auto', clearProps: 'all' });
-          projectsGrid.classList.remove('pinned');
-        }
+// Projects section animation
+    gsap.from(".project-card", {
+      y: 80,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power3.out",
+      stagger: 0.1,
+      scroll: {
+        trigger: ".projects-section",
+        start: "top 80%",
+        toggleActions: "play reverse play reverse"
       }
-});
-     
-    // Add each card's animation to the timeline
-    cards.forEach((card, i) => {
-      tl.to(card, { 
-        y: 0, 
-        opacity: 1, 
-        duration: 1,
-        ease: "power3.out",
-        zIndex: cards.length - i
-      }, i * 0.5); // stagger start times
     });
 
     // About/me animation on load

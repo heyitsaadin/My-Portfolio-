@@ -1778,6 +1778,7 @@
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
   (function() {
@@ -2019,8 +2020,8 @@
           projectsGrid.classList.remove('pinned');
         }
       }
-    });
-    
+});
+     
     // Add each card's animation to the timeline
     cards.forEach((card, i) => {
       tl.to(card, { 
@@ -2030,17 +2031,6 @@
         ease: "power3.out",
         zIndex: cards.length - i
       }, i * 0.5); // stagger start times
-    });
-          } else {
-            // Future cards hidden
-            gsap.set(card, { y: 100, opacity: 0 });
-          }
-        });
-      },
-      onLeave: () => {
-        gsap.set(cards, { y: 0, opacity: 1, position: 'relative', width: 'auto', left: 'auto', right: 'auto', zIndex: 'auto' });
-        projectsGrid.classList.remove('pinned');
-      }
     });
 
     // About/me animation on load
@@ -2053,7 +2043,7 @@
     });
 
     /* THREE.JS 3D CUBE — hero section */
-    constthreeScene = document.createElement('canvas');
+    const threeScene = document.createElement('canvas');
     threeScene.id = 'three-canvas';
     threeScene.style.position = 'absolute';
     threeScene.style.top = '0';

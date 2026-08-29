@@ -934,11 +934,23 @@
     .projects-section {
       padding: 0 50px;
       margin-bottom: 140px;
+      position: relative;
     }
 
     .projects-section-header { margin-bottom: 54px; }
 
-    .projects-grid { display: flex; flex-direction: column; gap: 32px; }
+    .projects-grid { 
+      position: relative; 
+      min-height: 500px;
+    }
+    
+    .projects-grid.pinned .project-card {
+      position: absolute;
+      top: 0;
+      left: 50px;
+      right: 50px;
+      width: calc(100% - 100px);
+    }
 
     .project-card {
       border: 1.5px solid var(--border);
@@ -1964,17 +1976,48 @@
       }
     });
 
-    // Projects section animation
-    gsap.from(".project-card", {
-      y: 80,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power3.out",
-      stagger: 0.1,
-      scroll: {
-        trigger: ".projects-section",
-        start: "top 80%",
-        toggleActions: "play reverse play reverse"
+    // Projects section — pin & sequential card reveal
+    const projectsSection = document.querySelector('.projects-section');
+    const projectsGrid = document.querySelector('.projects-grid');
+    const cards = gsap.utils.toArray('.project-card');
+    
+    // Initially hide all cards
+    gsap.set(cards, { y: 100, opacity: 0 });
+    
+    ScrollTrigger.create({
+      trigger: projectsSection,
+      start: "top top",
+      end: () => `+=${cards.length * 600}`, // 600px scroll per card
+      pin: true,
+      pinSpacing: true,
+      scrub: 1,
+      onEnter: () => projectsGrid.classList.add('pinned'),
+      onLeaveBack: () => projectsGrid.classList.remove('pinned'),
+      onUpdate: self => {
+        const progress = self.progress;
+        const cardIndex = Math.min(Math.floor(progress * cards.length), cards.length - 1);
+        const cardProgress = (progress * cards.length) - cardIndex;
+        
+        cards.forEach((card, i) => {
+          if (i < cardIndex) {
+            // Card already fully revealed
+            gsap.set(card, { y: 0, opacity: 1, zIndex: cards.length - i });
+          } else if (i === cardIndex) {
+            // Current card animating in
+            gsap.set(card, { 
+              y: 100 * (1 - cardProgress), 
+              opacity: cardProgress,
+              zIndex: cards.length - i 
+            });
+          } else {
+            // Future cards hidden
+            gsap.set(card, { y: 100, opacity: 0 });
+          }
+        });
+      },
+      onLeave: () => {
+        gsap.set(cards, { y: 0, opacity: 1, position: 'relative', width: 'auto', left: 'auto', right: 'auto', zIndex: 'auto' });
+        projectsGrid.classList.remove('pinned');
       }
     });
 

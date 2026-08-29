@@ -1666,111 +1666,6 @@
             </a>
           </div>
         </div>
-
-        <!-- AI Agent for Acode Card -->
-        <div class="project-card reveal delay-4">
-          <div class="card-header">
-            <div class="jarvis-logo">
-              <img src="images/aiagentlogo.webp" alt="AI Agent for Acode logo">
-            </div>
-            <div class="card-title-wrap">
-              <h3>AI Agent for Acode</h3>
-              <span class="card-tag">Acode Plugin</span>
-            </div>
-            <span class="card-status"><span class="dot"></span>Live</span>
-          </div>
-
-          <p class="card-desc">A sidebar chat panel for Acode editor that connects to any OpenAI-compatible or Anthropic API. The AI can read, write, create, and delete files in your project with diff preview, multi-step agent loops, and 16 built-in provider presets (OpenAI, Groq, DeepSeek, Gemini, Ollama, etc.).</p>
-
-          <div class="screenshot-slider">
-            <div class="slides">
-              <div class="slide active">
-                <img src="images/aiagent1.webp" alt="AI Agent chat panel">
-                <span class="slide-label">Chat Panel</span>
-              </div>
-              <div class="slide">
-                <img src="images/aiagent2.webp" alt="AI Agent diff preview">
-                <span class="slide-label">Diff Preview</span>
-              </div>
-              <div class="slide">
-                <img src="images/aiagent3.webp" alt="AI Agent provider picker">
-                <span class="slide-label">Provider Picker</span>
-              </div>
-            </div>
-            <div class="slider-dots">
-              <button class="sdot active" data-idx="0"></button>
-              <button class="sdot" data-idx="1"></button>
-              <button class="sdot" data-idx="2"></button>
-            </div>
-          </div>
-
-          <div class="card-stack">
-            <span>JavaScript</span>
-            <span>Acode API</span>
-            <span>OpenAI/Anthropic</span>
-          </div>
-
-          <div class="card-actions">
-            <a href="https://github.com/heyitsaadin/Ai_Agent_Acode" target="_blank" rel="noopener noreferrer" class="btn-ghost">
-              <i class="fa-brands fa-github"></i> Source
-            </a>
-            <a href="https://acode.app/plugin/com.heyitsaadin.ai_agent" target="_blank" rel="noopener noreferrer" class="btn-solid">
-              View Project <i class="fa-solid fa-arrow-right"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Smooth Cursor for Acode Card -->
-        <div class="project-card reveal delay-5">
-          <div class="card-header">
-            <div class="jarvis-logo">
-              <img src="images/smoothcursorlogo.webp" alt="Smooth Cursor for Acode logo">
-            </div>
-            <div class="card-title-wrap">
-              <h3>Smooth Cursor for Acode</h3>
-              <span class="card-tag">Acode Plugin</span>
-            </div>
-            <span class="card-status"><span class="dot"></span>Live</span>
-          </div>
-
-          <p class="card-desc">A lightweight Acode plugin that adds a smooth, animated cursor trail to the editor. Customizable colors, size, and easing — pure vanilla JS, no dependencies.</p>
-
-          <div class="screenshot-slider">
-            <div class="slides">
-              <div class="slide active">
-                <img src="images/smoothcursor1.webp" alt="Smooth Cursor demo">
-                <span class="slide-label">Cursor Trail</span>
-              </div>
-              <div class="slide">
-                <img src="images/smoothcursor2.webp" alt="Smooth Cursor settings">
-                <span class="slide-label">Settings</span>
-              </div>
-              <div class="slide">
-                <img src="images/smoothcursor3.webp" alt="Smooth Cursor in action">
-                <span class="slide-label">In Action</span>
-              </div>
-            </div>
-            <div class="slider-dots">
-              <button class="sdot active" data-idx="0"></button>
-              <button class="sdot" data-idx="1"></button>
-              <button class="sdot" data-idx="2"></button>
-            </div>
-          </div>
-
-          <div class="card-stack">
-            <span>JavaScript</span>
-            <span>Acode API</span>
-          </div>
-
-          <div class="card-actions">
-            <a href="https://github.com/heyitsaadin/acode-smoothcursor-plugin" target="_blank" rel="noopener noreferrer" class="btn-ghost">
-              <i class="fa-brands fa-github"></i> Source
-            </a>
-            <a href="https://acode.app/plugin/kc.aadin.smoothcursor" target="_blank" rel="noopener noreferrer" class="btn-solid">
-              View Project <i class="fa-solid fa-arrow-right"></i>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -1792,7 +1687,7 @@
         <a href="https://www.linkedin.com/in/aadin-kc-128bb3371" target="_blank" rel="noopener noreferrer" class="reveal delay-2">
           <i class="fa-brands fa-linkedin"></i><span>LinkedIn</span>
         </a>
-        <a href="https://wa.me/9446734945" target="_blank" rel="noopener noreferrer" class="reveal delay-3">
+        <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="reveal delay-3">
           <i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span>
         </a>
         <a href="https://x.com/its_aadin" target="_blank" rel="noopener noreferrer" class="reveal delay-4">
@@ -1814,7 +1709,6 @@
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
   (function() {
@@ -1978,244 +1872,65 @@
     }
     requestAnimationFrame(rafTick);
 
-    /* ── GSAP SECTION ANIMATIONS ─────────────────────────────────── */
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Hero entrance animation
-    gsap.from(".hero-section .text h2", {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out"
-    });
-    gsap.from(".hero-section .text p", {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.2
-    });
-    gsap.from(".hero-section .text .links", {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.4
-    });
-
-    // Skills section staggered animation
-    gsap.from(".skills-section .cells .cell", {
-      y: 50,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power3.out",
-      stagger: 0.15,
-      scrollTrigger: {
-        trigger: ".skills-section",
-        start: "top 80%",
-        toggleActions: "play reverse play reverse"
-      }
-    });
-
-// Projects section animation
-    gsap.from(".project-card", {
-      y: 80,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power3.out",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".projects-section",
-        start: "top 80%",
-        toggleActions: "play reverse play reverse"
-      }
-    });
-
-    // About/me animation on load
-    gsap.from(".bottom-blur, .top-blur", {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.6
-    });
-
-    /* THREE.JS 3D CUBE — hero section */
-    const threeScene = document.createElement('canvas');
-    threeScene.id = 'three-canvas';
-    threeScene.style.position = 'absolute';
-    threeScene.style.top = '0';
-    threeScene.style.left = '0';
-    threeScene.style.width = '100%';
-    threeScene.style.height = '100%';
-    threeScene.style.zIndex = '1';
-    const heroImg = document.querySelector('.hero-section .headshot img');
-    if (heroImg) {
-      heroImg.parentElement.style.position = 'relative';
-      heroImg.parentElement.style.zIndex = '2';
-      heroImg.parentElement.appendChild(threeScene);
-    }
-
-    let renderer, camera, scene, cube;
-    function initThree() {
-      const canvas = document.getElementById('three-canvas');
-      if (!canvas) return;
-      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-      camera.position.set(0, 0, 4);
-
-      scene = new THREE.Scene();
-
-      // Create a colorful cube
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshStandardMaterial({
-        color: 0x7c5cbf,
-        flatShading: true
-      });
-      cube = new THREE.Mesh(geometry, material);
-      scene.add(cube);
-
-      // Lights
-      const ambient = new THREE.AmbientLight(0xffffff, 0.5);
-      scene.add(ambient);
-      const light = new THREE.DirectionalLight(0xffffff, 0.8);
-      light.position.set(5, 5, 5);
-      scene.add(light);
-
-      // Animate
-      function animate() {
-        requestAnimationFrame(animate);
-        cube.rotation.y += 0.01;
-        cube.rotation.x += 0.005;
-        renderer.render(scene, camera);
-      }
-      animate();
-
-      // Resize handler
-      window.addEventListener('resize', () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-      });
-    }
-
-    // Initialize Three.js after page loads
-    if (window.THREE) {
-      initThree();
-    } else {
-      // Load Three.js from CDN if not already loaded
-      const threeScript = document.createElement('script');
-      threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js';
-      threeScript.async = true;
-      threeScript.onload = () => initThree();
-      document.head.appendChild(threeScript);
-    }
-
-    /* MOUSE FOLLOW GLOW EFFECT for hero */
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-      const glowCircle = document.createElement('div');
-      glowCircle.style.position = 'absolute';
-      glowCircle.style.width = '200px';
-      glowCircle.style.height = '200px';
-      glowCircle.style.borderRadius = '50%';
-      glowCircle.style.background = 'radial-gradient(circle, rgba(124,92,191,0.3) 0%, transparent 70%)';
-      glowCircle.style.pointerEvents = 'none';
-      glowCircle.style.zIndex = '3';
-      heroSection.style.position = 'relative';
-      heroSection.style.overflow = 'visible';
-      heroSection.appendChild(glowCircle);
-
-      let mx = 0, my = 0, cx = 0, cy = 0;
-      document.addEventListener('mousemove', e => {
-        mx = e.clientX;
-        my = e.clientY;
-      });
-      (function raf() {
-        const hr = heroSection.getBoundingClientRect();
-        const relX = mx - hr.left - hr.width / 2;
-        const relY = my - hr.top - hr.height / 2;
-        cx += (relX - cx) * 0.05;
-        cy += (relY - cy) * 0.05;
-        glowCircle.style.left = cx + hr.width / 2 - 100 + 'px';
-        glowCircle.style.top = cy + hr.height / 2 - 100 + 'px';
-        glowCircle.style.opacity = 0.3 + Math.abs(Math.sin(cx * 0.02)) * 0.2;
-        requestAnimationFrame(raf);
-      })();
-    }
-
     /* GSAP MENU */
-    if (typeof gsap === 'undefined') {
-      console.error('GSAP not loaded, menu disabled');
-    } else {
-      const toggle    = document.getElementById('menuToggle');
-      const overlay   = document.getElementById('menuOverlay');
-      const panel     = document.getElementById('menuPanel');
-      const backdrop  = document.getElementById('menuBackdrop');
-      const hamText   = document.getElementById('hamText');
-      if (!toggle || !overlay || !panel || !backdrop || !hamText) {
-        console.error('Menu elements missing');
-      } else {
-        const prelayers = Array.from(overlay.querySelectorAll('.sm-prelayer'));
-        const navLabels = Array.from(panel.querySelectorAll('.sm-nav-label'));
-        const socialTitle = panel.querySelector('.sm-socials-title');
-        const socialLinks = Array.from(panel.querySelectorAll('.sm-social-link'));
-        let isOpen = false, busy = false;
-        gsap.set([...prelayers, panel], { xPercent: 100 });
-        gsap.set(overlay, { visibility: 'hidden' });
+    const toggle    = document.getElementById('menuToggle');
+    const overlay   = document.getElementById('menuOverlay');
+    const panel     = document.getElementById('menuPanel');
+    const backdrop  = document.getElementById('menuBackdrop');
+    const hamText   = document.getElementById('hamText');
+    const prelayers = Array.from(overlay.querySelectorAll('.sm-prelayer'));
+    const navLabels = Array.from(panel.querySelectorAll('.sm-nav-label'));
+    const socialTitle = panel.querySelector('.sm-socials-title');
+    const socialLinks = Array.from(panel.querySelectorAll('.sm-social-link'));
+    let isOpen = false, busy = false;
+    gsap.set([...prelayers, panel], { xPercent: 100 });
+    gsap.set(overlay, { visibility: 'hidden' });
+    gsap.set(navLabels, { yPercent: 130, rotate: 8 });
+    gsap.set(socialTitle, { opacity: 0, y: 10 });
+    gsap.set(socialLinks, { opacity: 0, y: 20 });
+    function cycleText(dir) {
+      const seq = dir === 'open' ? ['Menu','Close','Menu','Close','Close'] : ['Close','Menu','Close','Menu','Menu'];
+      let i = 0;
+      const iv = setInterval(() => { hamText.textContent = seq[i++]; if (i >= seq.length) clearInterval(iv); }, 60);
+    }
+    function openMenu() {
+      if (busy) return;
+      busy = true; isOpen = true;
+      toggle.setAttribute('aria-expanded', 'true');
+      overlay.style.visibility = 'visible';
+      document.body.classList.add('menu-open');
+      backdrop.classList.add('visible');
+      cycleText('open');
+      gsap.to('.bar1', { rotate: 45,  y: 5,  duration: 0.4, ease: 'power3.out' });
+      gsap.to('.bar2', { rotate: -45, y: -5, duration: 0.4, ease: 'power3.out' });
+      const tl = gsap.timeline({ onComplete: () => { busy = false; } });
+      prelayers.forEach((l, i) => { tl.fromTo(l, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07); });
+      tl.fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 0.65, ease: 'power4.out' }, 0.12);
+      tl.to(navLabels,   { yPercent: 0, rotate: 0, duration: 0.9, ease: 'power4.out', stagger: 0.1 }, 0.3);
+      tl.to(socialTitle, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.55);
+      tl.to(socialLinks, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08 }, 0.62);
+    }
+    function closeMenu() {
+      if (busy) return;
+      busy = true; isOpen = false;
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+      backdrop.classList.remove('visible');
+      cycleText('close');
+      gsap.to('.bar1', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
+      gsap.to('.bar2', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
+      gsap.to([...prelayers, panel], { xPercent: 100, duration: 0.35, ease: 'power3.in', stagger: 0.03, onComplete: () => {
+        overlay.style.visibility = 'hidden';
         gsap.set(navLabels, { yPercent: 130, rotate: 8 });
         gsap.set(socialTitle, { opacity: 0, y: 10 });
         gsap.set(socialLinks, { opacity: 0, y: 20 });
-        function cycleText(dir) {
-          const seq = dir === 'open' ? ['Menu','Close','Menu','Close','Close'] : ['Close','Menu','Close','Menu','Menu'];
-          let i = 0;
-          const iv = setInterval(() => { hamText.textContent = seq[i++]; if (i >= seq.length) clearInterval(iv); }, 60);
-        }
-        function openMenu() {
-          if (busy) return;
-          busy = true; isOpen = true;
-          toggle.setAttribute('aria-expanded', 'true');
-          overlay.style.visibility = 'visible';
-          document.body.classList.add('menu-open');
-          backdrop.classList.add('visible');
-          cycleText('open');
-          gsap.to('.bar1', { rotate: 45,  y: 5,  duration: 0.4, ease: 'power3.out' });
-          gsap.to('.bar2', { rotate: -45, y: -5, duration: 0.4, ease: 'power3.out' });
-          const tl = gsap.timeline({ onComplete: () => { busy = false; } });
-          prelayers.forEach((l, i) => { tl.fromTo(l, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07); });
-          tl.fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 0.65, ease: 'power4.out' }, 0.12);
-          tl.to(navLabels,   { yPercent: 0, rotate: 0, duration: 0.9, ease: 'power4.out', stagger: 0.1 }, 0.3);
-          tl.to(socialTitle, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.55);
-          tl.to(socialLinks, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08 }, 0.62);
-        }
-        function closeMenu() {
-          if (busy) return;
-          busy = true; isOpen = false;
-          toggle.setAttribute('aria-expanded', 'false');
-          document.body.classList.remove('menu-open');
-          backdrop.classList.remove('visible');
-          cycleText('close');
-          gsap.to('.bar1', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
-          gsap.to('.bar2', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
-          gsap.to([...prelayers, panel], { xPercent: 100, duration: 0.35, ease: 'power3.in', stagger: 0.03, onComplete: () => {
-            overlay.style.visibility = 'hidden';
-            gsap.set(navLabels, { yPercent: 130, rotate: 8 });
-            gsap.set(socialTitle, { opacity: 0, y: 10 });
-            gsap.set(socialLinks, { opacity: 0, y: 20 });
-            busy = false;
-          } });
-        }
-        toggle.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
-        backdrop.addEventListener('click', closeMenu);
-        overlay.addEventListener('mousedown', e => { if (!panel.contains(e.target)) closeMenu(); });
-        panel.querySelectorAll('.sm-nav-item').forEach(l => l.addEventListener('click', closeMenu));
-      }
+        busy = false;
+      } });
     }
+    toggle.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+    backdrop.addEventListener('click', closeMenu);
+    overlay.addEventListener('mousedown', e => { if (!panel.contains(e.target)) closeMenu(); });
+    panel.querySelectorAll('.sm-nav-item').forEach(l => l.addEventListener('click', closeMenu));
   })();
   </script>
 

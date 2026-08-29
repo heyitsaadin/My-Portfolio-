@@ -938,7 +938,7 @@
 
     .projects-section-header { margin-bottom: 54px; }
 
-    .projects-grid { display: flex; flex-direction: column; gap: 32px; }
+    .projects-grid { display: flex; flex-direction: row; gap: 32px; overflow-x: auto; padding-bottom: 16px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
 
     .project-card {
       border: 1.5px solid var(--border);
@@ -953,6 +953,9 @@
       transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
                   box-shadow 0.3s cubic-bezier(0.22,1,0.36,1),
                   border-color 0.3s ease;
+      flex: 0 0 480px;
+      scroll-snap-align: start;
+      min-width: 480px;
     }
 
     /* Clean press-down feel on touch */
@@ -1344,6 +1347,7 @@
       .quote-card       { padding: 28px 22px 22px; }
       .typewriter-text  { min-height: 180px; }
       .social { grid-template-columns: repeat(2, 1fr); }
+      .project-card { flex: 0 0 85%; min-width: 85%; }
     }
   </style>
 </head>

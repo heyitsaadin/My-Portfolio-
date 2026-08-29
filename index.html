@@ -2149,21 +2149,27 @@
     }
 
     /* GSAP MENU */
-    const toggle    = document.getElementById('menuToggle');
-    const overlay   = document.getElementById('menuOverlay');
-    const panel     = document.getElementById('menuPanel');
-    const backdrop  = document.getElementById('menuBackdrop');
-    const hamText   = document.getElementById('hamText');
-    const prelayers = Array.from(overlay.querySelectorAll('.sm-prelayer'));
-    const navLabels = Array.from(panel.querySelectorAll('.sm-nav-label'));
-    const socialTitle = panel.querySelector('.sm-socials-title');
-    const socialLinks = Array.from(panel.querySelectorAll('.sm-social-link'));
-    let isOpen = false, busy = false;
-    gsap.set([...prelayers, panel], { xPercent: 100 });
-    gsap.set(overlay, { visibility: 'hidden' });
-    gsap.set(navLabels, { yPercent: 130, rotate: 8 });
-    gsap.set(socialTitle, { opacity: 0, y: 10 });
-    gsap.set(socialLinks, { opacity: 0, y: 20 });
+    if (typeof gsap === 'undefined') {
+      console.error('GSAP not loaded, menu disabled');
+    } else {
+      const toggle    = document.getElementById('menuToggle');
+      const overlay   = document.getElementById('menuOverlay');
+      const panel     = document.getElementById('menuPanel');
+      const backdrop  = document.getElementById('menuBackdrop');
+      const hamText   = document.getElementById('hamText');
+      if (!toggle || !overlay || !panel || !backdrop || !hamText) {
+        console.error('Menu elements missing');
+      } else {
+        const prelayers = Array.from(overlay.querySelectorAll('.sm-prelayer'));
+        const navLabels = Array.from(panel.querySelectorAll('.sm-nav-label'));
+        const socialTitle = panel.querySelector('.sm-socials-title');
+        const socialLinks = Array.from(panel.querySelectorAll('.sm-social-link'));
+        let isOpen = false, busy = false;
+        gsap.set([...prelayers, panel], { xPercent: 100 });
+        gsap.set(overlay, { visibility: 'hidden' });
+        gsap.set(navLabels, { yPercent: 130, rotate: 8 });
+        gsap.set(socialTitle, { opacity: 0, y: 10 });
+        gsap.set(socialLinks, { opacity: 0, y: 20 });
     function cycleText(dir) {
       const seq = dir === 'open' ? ['Menu','Close','Menu','Close','Close'] : ['Close','Menu','Close','Menu','Menu'];
       let i = 0;
@@ -2207,6 +2213,7 @@
     backdrop.addEventListener('click', closeMenu);
     overlay.addEventListener('mousedown', e => { if (!panel.contains(e.target)) closeMenu(); });
     panel.querySelectorAll('.sm-nav-item').forEach(l => l.addEventListener('click', closeMenu));
+  }
   })();
   </script>
 

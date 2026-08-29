@@ -944,12 +944,16 @@
       min-height: 500px;
     }
     
+    .projects-grid.pinned {
+      position: relative;
+    }
+    
     .projects-grid.pinned .project-card {
       position: absolute;
       top: 0;
-      left: 50px;
-      right: 50px;
-      width: calc(100% - 100px);
+      left: 0;
+      right: 0;
+      width: 100%;
     }
 
     .project-card {
@@ -1976,39 +1980,57 @@
       }
     });
 
-    // Projects section — pin & sequential card reveal
+// Projects section — pin & sequential card reveal
     const projectsSection = document.querySelector('.projects-section');
     const projectsGrid = document.querySelector('.projects-grid');
     const cards = gsap.utils.toArray('.project-card');
     
+    console.log('Projects section:', projectsSection);
+    console.log('Projects grid:', projectsGrid);
+    console.log('Cards found:', cards.length, cards);
+    
+    if (cards.length === 0) {
+      console.error('No project cards found!');
+    }
+    
     // Initially hide all cards
     gsap.set(cards, { y: 100, opacity: 0 });
     
-    ScrollTrigger.create({
-      trigger: projectsSection,
-      start: "top top",
-      end: () => `+=${cards.length * 600}`, // 600px scroll per card
-      pin: true,
-      pinSpacing: true,
-      scrub: 1,
-      onEnter: () => projectsGrid.classList.add('pinned'),
-      onLeaveBack: () => projectsGrid.classList.remove('pinned'),
-      onUpdate: self => {
-        const progress = self.progress;
-        const cardIndex = Math.min(Math.floor(progress * cards.length), cards.length - 1);
-        const cardProgress = (progress * cards.length) - cardIndex;
-        
-        cards.forEach((card, i) => {
-          if (i < cardIndex) {
-            // Card already fully revealed
-            gsap.set(card, { y: 0, opacity: 1, zIndex: cards.length - i });
-          } else if (i === cardIndex) {
-            // Current card animating in
-            gsap.set(card, { 
-              y: 100 * (1 - cardProgress), 
-              opacity: cardProgress,
-              zIndex: cards.length - i 
-            });
+    // Create a timeline for the sequential reveal
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: projectsSection,
+        start: "top top",
+        end: () => `+=${cards.length * 600}`,
+        pin: true,
+        pinSpacing: true,
+        scrub: 1,
+        onEnter: () => {
+          console.log('Pin entered');
+          projectsGrid.classList.add('pinned');
+        },
+        onLeaveBack: () => {
+          console.log('Pin leave back');
+          projectsGrid.classList.remove('pinned');
+        },
+        onLeave: () => {
+          console.log('Pin leave - animation complete');
+          gsap.set(cards, { y: 0, opacity: 1, position: 'relative', width: 'auto', left: 'auto', right: 'auto', zIndex: 'auto', clearProps: 'all' });
+          projectsGrid.classList.remove('pinned');
+        }
+      }
+    });
+    
+    // Add each card's animation to the timeline
+    cards.forEach((card, i) => {
+      tl.to(card, { 
+        y: 0, 
+        opacity: 1, 
+        duration: 1,
+        ease: "power3.out",
+        zIndex: cards.length - i
+      }, i * 0.5); // stagger start times
+    });
           } else {
             // Future cards hidden
             gsap.set(card, { y: 100, opacity: 0 });

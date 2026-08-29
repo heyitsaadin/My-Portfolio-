@@ -1814,6 +1814,7 @@
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
   (function() {
@@ -2009,7 +2010,7 @@
       duration: 0.6,
       ease: "power3.out",
       stagger: 0.15,
-      scroll: {
+      scrollTrigger: {
         trigger: ".skills-section",
         start: "top 80%",
         toggleActions: "play reverse play reverse"
@@ -2023,7 +2024,7 @@
       duration: 0.6,
       ease: "power3.out",
       stagger: 0.1,
-      scroll: {
+      scrollTrigger: {
         trigger: ".projects-section",
         start: "top 80%",
         toggleActions: "play reverse play reverse"
@@ -2170,50 +2171,51 @@
         gsap.set(navLabels, { yPercent: 130, rotate: 8 });
         gsap.set(socialTitle, { opacity: 0, y: 10 });
         gsap.set(socialLinks, { opacity: 0, y: 20 });
-    function cycleText(dir) {
-      const seq = dir === 'open' ? ['Menu','Close','Menu','Close','Close'] : ['Close','Menu','Close','Menu','Menu'];
-      let i = 0;
-      const iv = setInterval(() => { hamText.textContent = seq[i++]; if (i >= seq.length) clearInterval(iv); }, 60);
+        function cycleText(dir) {
+          const seq = dir === 'open' ? ['Menu','Close','Menu','Close','Close'] : ['Close','Menu','Close','Menu','Menu'];
+          let i = 0;
+          const iv = setInterval(() => { hamText.textContent = seq[i++]; if (i >= seq.length) clearInterval(iv); }, 60);
+        }
+        function openMenu() {
+          if (busy) return;
+          busy = true; isOpen = true;
+          toggle.setAttribute('aria-expanded', 'true');
+          overlay.style.visibility = 'visible';
+          document.body.classList.add('menu-open');
+          backdrop.classList.add('visible');
+          cycleText('open');
+          gsap.to('.bar1', { rotate: 45,  y: 5,  duration: 0.4, ease: 'power3.out' });
+          gsap.to('.bar2', { rotate: -45, y: -5, duration: 0.4, ease: 'power3.out' });
+          const tl = gsap.timeline({ onComplete: () => { busy = false; } });
+          prelayers.forEach((l, i) => { tl.fromTo(l, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07); });
+          tl.fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 0.65, ease: 'power4.out' }, 0.12);
+          tl.to(navLabels,   { yPercent: 0, rotate: 0, duration: 0.9, ease: 'power4.out', stagger: 0.1 }, 0.3);
+          tl.to(socialTitle, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.55);
+          tl.to(socialLinks, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08 }, 0.62);
+        }
+        function closeMenu() {
+          if (busy) return;
+          busy = true; isOpen = false;
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.classList.remove('menu-open');
+          backdrop.classList.remove('visible');
+          cycleText('close');
+          gsap.to('.bar1', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
+          gsap.to('.bar2', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
+          gsap.to([...prelayers, panel], { xPercent: 100, duration: 0.35, ease: 'power3.in', stagger: 0.03, onComplete: () => {
+            overlay.style.visibility = 'hidden';
+            gsap.set(navLabels, { yPercent: 130, rotate: 8 });
+            gsap.set(socialTitle, { opacity: 0, y: 10 });
+            gsap.set(socialLinks, { opacity: 0, y: 20 });
+            busy = false;
+          } });
+        }
+        toggle.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+        backdrop.addEventListener('click', closeMenu);
+        overlay.addEventListener('mousedown', e => { if (!panel.contains(e.target)) closeMenu(); });
+        panel.querySelectorAll('.sm-nav-item').forEach(l => l.addEventListener('click', closeMenu));
+      }
     }
-    function openMenu() {
-      if (busy) return;
-      busy = true; isOpen = true;
-      toggle.setAttribute('aria-expanded', 'true');
-      overlay.style.visibility = 'visible';
-      document.body.classList.add('menu-open');
-      backdrop.classList.add('visible');
-      cycleText('open');
-      gsap.to('.bar1', { rotate: 45,  y: 5,  duration: 0.4, ease: 'power3.out' });
-      gsap.to('.bar2', { rotate: -45, y: -5, duration: 0.4, ease: 'power3.out' });
-      const tl = gsap.timeline({ onComplete: () => { busy = false; } });
-      prelayers.forEach((l, i) => { tl.fromTo(l, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07); });
-      tl.fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 0.65, ease: 'power4.out' }, 0.12);
-      tl.to(navLabels,   { yPercent: 0, rotate: 0, duration: 0.9, ease: 'power4.out', stagger: 0.1 }, 0.3);
-      tl.to(socialTitle, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.55);
-      tl.to(socialLinks, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08 }, 0.62);
-    }
-    function closeMenu() {
-      if (busy) return;
-      busy = true; isOpen = false;
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('menu-open');
-      backdrop.classList.remove('visible');
-      cycleText('close');
-      gsap.to('.bar1', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
-      gsap.to('.bar2', { rotate: 0, y: 0, duration: 0.35, ease: 'power3.inOut' });
-      gsap.to([...prelayers, panel], { xPercent: 100, duration: 0.35, ease: 'power3.in', stagger: 0.03, onComplete: () => {
-        overlay.style.visibility = 'hidden';
-        gsap.set(navLabels, { yPercent: 130, rotate: 8 });
-        gsap.set(socialTitle, { opacity: 0, y: 10 });
-        gsap.set(socialLinks, { opacity: 0, y: 20 });
-        busy = false;
-      } });
-    }
-    toggle.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
-    backdrop.addEventListener('click', closeMenu);
-    overlay.addEventListener('mousedown', e => { if (!panel.contains(e.target)) closeMenu(); });
-    panel.querySelectorAll('.sm-nav-item').forEach(l => l.addEventListener('click', closeMenu));
-  }
   })();
   </script>
 

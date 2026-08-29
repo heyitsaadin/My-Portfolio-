@@ -1872,6 +1872,177 @@
     }
     requestAnimationFrame(rafTick);
 
+    /* ── GSAP SECTION ANIMATIONS ─────────────────────────────────── */
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero entrance animation
+    gsap.from(".hero-section .text h2", {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out"
+    });
+    gsap.from(".hero-section .text p", {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.2
+    });
+    gsap.from(".hero-section .text .links", {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.4
+    });
+
+    // Skills section staggered animation
+    gsap.from(".skills-section .cells .cell", {
+      y: 50,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power3.out",
+      stagger: 0.15,
+      scroll: {
+        trigger: ".skills-section",
+        start: "top 80%",
+        toggleActions: "play reverse play reverse"
+      }
+    });
+
+    // Projects section animation
+    gsap.from(".project-card", {
+      y: 80,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power3.out",
+      stagger: 0.1,
+      scroll: {
+        trigger: ".projects-section",
+        start: "top 80%",
+        toggleActions: "play reverse play reverse"
+      }
+    });
+
+    // About/me animation on load
+    gsap.from(".bottom-blur, .top-blur", {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.6
+    });
+
+    /* THREE.JS 3D CUBE — hero section */
+    constthreeScene = document.createElement('canvas');
+    threeScene.id = 'three-canvas';
+    threeScene.style.position = 'absolute';
+    threeScene.style.top = '0';
+    threeScene.style.left = '0';
+    threeScene.style.width = '100%';
+    threeScene.style.height = '100%';
+    threeScene.style.zIndex = '1';
+    const heroImg = document.querySelector('.hero-section .headshot img');
+    if (heroImg) {
+      heroImg.parentElement.style.position = 'relative';
+      heroImg.parentElement.style.zIndex = '2';
+      heroImg.parentElement.appendChild(threeScene);
+    }
+
+    let renderer, camera, scene, cube;
+    function initThree() {
+      const canvas = document.getElementById('three-canvas');
+      if (!canvas) return;
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 4);
+
+      scene = new THREE.Scene();
+
+      // Create a colorful cube
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshStandardMaterial({
+        color: 0x7c5cbf,
+        flatShading: true
+      });
+      cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+
+      // Lights
+      const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambient);
+      const light = new THREE.DirectionalLight(0xffffff, 0.8);
+      light.position.set(5, 5, 5);
+      scene.add(light);
+
+      // Animate
+      function animate() {
+        requestAnimationFrame(animate);
+        cube.rotation.y += 0.01;
+        cube.rotation.x += 0.005;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      });
+    }
+
+    // Initialize Three.js after page loads
+    if (window.THREE) {
+      initThree();
+    } else {
+      // Load Three.js from CDN if not already loaded
+      const threeScript = document.createElement('script');
+      threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js';
+      threeScript.async = true;
+      threeScript.onload = () => initThree();
+      document.head.appendChild(threeScript);
+    }
+
+    /* MOUSE FOLLOW GLOW EFFECT for hero */
+    const heroSection = document.querySelector('.hero-section');
+    if (heroSection) {
+      const glowCircle = document.createElement('div');
+      glowCircle.style.position = 'absolute';
+      glowCircle.style.width = '200px';
+      glowCircle.style.height = '200px';
+      glowCircle.style.borderRadius = '50%';
+      glowCircle.style.background = 'radial-gradient(circle, rgba(124,92,191,0.3) 0%, transparent 70%)';
+      glowCircle.style.pointerEvents = 'none';
+      glowCircle.style.zIndex = '3';
+      heroSection.style.position = 'relative';
+      heroSection.style.overflow = 'visible';
+      heroSection.appendChild(glowCircle);
+
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+      (function raf() {
+        const hr = heroSection.getBoundingClientRect();
+        const relX = mx - hr.left - hr.width / 2;
+        const relY = my - hr.top - hr.height / 2;
+        cx += (relX - cx) * 0.05;
+        cy += (relY - cy) * 0.05;
+        glowCircle.style.left = cx + hr.width / 2 - 100 + 'px';
+        glowCircle.style.top = cy + hr.height / 2 - 100 + 'px';
+        glowCircle.style.opacity = 0.3 + Math.abs(Math.sin(cx * 0.02)) * 0.2;
+        requestAnimationFrame(raf);
+      })();
+    }
+
     /* GSAP MENU */
     const toggle    = document.getElementById('menuToggle');
     const overlay   = document.getElementById('menuOverlay');

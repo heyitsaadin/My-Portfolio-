@@ -1189,6 +1189,21 @@
         flex-direction: column;
       }
       .slides { flex: 1; aspect-ratio: unset; min-height: 280px; }
+
+      /* Cards with no screenshot slider: use the full width instead of
+         leaving the right-hand column empty */
+      .project-card:not(:has(.screenshot-slider)) {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "header header"
+          "desc   desc"
+          "stack  actions";
+        column-gap: 24px;
+        align-items: center;
+      }
+      .project-card:not(:has(.screenshot-slider)) .card-desc { max-width: 760px; }
+      .project-card:not(:has(.screenshot-slider)) .card-stack { margin-bottom: 0; }
+      .project-card:not(:has(.screenshot-slider)) .card-actions { justify-self: end; }
     }
 
     /* ═══════════════════════════════════════════

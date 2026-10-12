@@ -992,6 +992,11 @@
     .proj-opt.active i { color: #fff; }
     .proj-panel { display: none; flex-direction: column; gap: 32px; }
     .proj-panel.active { display: flex; animation: projIn 0.45s var(--ease-out-expo); }
+    [hidden] { display: none !important; }
+    .card-stats { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; font-size: 12px; color: var(--muted); }
+    .card-stats .stat i { margin-right: 6px; font-size: 11px; }
+    .card-stats b { margin-right: 4px; color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .stat-paid { padding: 2px 9px; border-radius: 20px; background: var(--text); color: #fff; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; }
     @keyframes projIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
     @media (max-width: 600px) { .proj-main { height: 52px; font-size: 16px; } .proj-more { height: 52px; width: 58px; } }
 

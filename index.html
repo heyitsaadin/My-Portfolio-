@@ -2192,6 +2192,44 @@
     }
     requestAnimationFrame(rafTick);
 
+    /* PLUGIN LIVE DATA: Acode installs + GitHub public check, via /api/plugins.
+       Any card with data-acode-id (+ data-repo) is picked up automatically.
+       The Source button stays hidden unless the repo is confirmed public. */
+    (function () {
+      const cards = Array.from(document.querySelectorAll('.project-card[data-acode-id]'));
+      if (!cards.length) return;
+      const KEY = 'plugins-live-v1', TTL = 5 * 60 * 1000;
+      const fmt = n => Number(n).toLocaleString('en-US');
+      function apply(data) {
+        cards.forEach(card => {
+          const p = data.plugins && data.plugins[card.dataset.acodeId];
+          const box = card.querySelector('.card-stats');
+          if (p && box) {
+            box.querySelector('[data-stat="downloads"]').textContent = fmt(p.downloads);
+            const total = p.votesUp + p.votesDown;
+            box.querySelector('[data-stat="rating"]').textContent = total ? Math.round((p.votesUp / total) * 100) + '% positive' : 'Unrated';
+            box.querySelector('[data-stat="paid"]').hidden = !p.paid;
+            box.hidden = false;
+          }
+          const src = card.querySelector('[data-source]');
+          if (src) src.hidden = !(data.repos && data.repos[card.dataset.repo] === true);
+        });
+      }
+      try {
+        const c = JSON.parse(sessionStorage.getItem(KEY));
+        if (c && Date.now() - c.t < TTL) { apply(c.d); return; }
+      } catch (e) {}
+      const ids = cards.map(c => c.dataset.acodeId).join(',');
+      const repos = cards.map(c => c.dataset.repo).filter(Boolean).join(',');
+      fetch('/api/plugins?ids=' + encodeURIComponent(ids) + '&repos=' + encodeURIComponent(repos))
+        .then(r => (r.ok ? r.json() : Promise.reject()))
+        .then(d => {
+          apply(d);
+          try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d })); } catch (e) {}
+        })
+        .catch(() => {});
+    })();
+
     /* PROJECT CATEGORY SWITCHER */
     (function () {
       const sw = document.getElementById('projSwitcher');

@@ -947,6 +947,61 @@
 
     .projects-grid { display: flex; flex-direction: column; gap: 32px; }
 
+    /* Project category switcher (split pill + dots) */
+    .proj-switcher { position: relative; display: inline-block; margin-bottom: 22px; }
+    .proj-split { display: flex; gap: 3px; }
+    .proj-main, .proj-more {
+      border: none; cursor: pointer; background: #e8e0f8; color: #2d1b69;
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .proj-main {
+      display: inline-flex; align-items: center; gap: 12px;
+      height: 56px; padding: 0 26px 0 22px;
+      border-radius: 28px 6px 6px 28px;
+      font-size: 17px; font-weight: 500;
+    }
+    .proj-main i { font-size: 16px; }
+    .proj-more {
+      width: 64px; height: 56px; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px 28px 28px 6px;
+    }
+    .proj-more i { transition: transform 0.25s var(--ease-out-expo); }
+    .proj-switcher.open .proj-more i { transform: rotate(180deg); }
+    .proj-main:hover, .proj-more:hover { background: #ddd2f5; }
+    .proj-main:active, .proj-more:active { transform: scale(0.97); }
+    .proj-menu {
+      position: absolute; top: calc(100% + 8px); left: 0; min-width: 250px; z-index: 30;
+      background: #fff; border: 1.5px solid var(--border); border-radius: 20px; padding: 8px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.25s var(--ease-out-expo), visibility 0.2s;
+    }
+    .proj-switcher.open .proj-menu { opacity: 1; visibility: visible; transform: none; }
+    .proj-opt {
+      display: flex; align-items: center; gap: 12px; width: 100%;
+      padding: 12px 14px; border: none; border-radius: 14px; text-align: left; cursor: pointer;
+      background: transparent; color: var(--text);
+      font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 500;
+    }
+    .proj-opt i { width: 18px; text-align: center; color: var(--accent); }
+    .proj-opt .n { margin-left: auto; font-size: 12px; color: #aaa; }
+    .proj-opt:hover { background: #f5f1fc; }
+    .proj-opt.active { background: #e8e0f8; color: #2d1b69; }
+    .proj-dots { display: flex; gap: 8px; margin-bottom: 32px; }
+    .proj-dot {
+      position: relative; width: 22px; height: 8px; padding: 0; border: none; border-radius: 4px;
+      background: #d9cef2; cursor: pointer;
+      transition: width 0.3s var(--ease-out-expo), background 0.3s;
+    }
+    .proj-dot::before { content: ''; position: absolute; inset: -12px -4px; }
+    .proj-dot.active { width: 44px; background: var(--accent); }
+    .proj-panel { display: none; flex-direction: column; gap: 32px; }
+    .proj-panel.active { display: flex; animation: projIn 0.45s var(--ease-out-expo); }
+    @keyframes projIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 600px) { .proj-main { height: 52px; font-size: 16px; } .proj-more { height: 52px; width: 58px; } }
+
     .project-card {
       border: 1.5px solid var(--border);
       border-radius: 20px;
@@ -1583,7 +1638,28 @@
         <p class="section-sub">Things I've built while learning — real stuff, not just tutorials.</p>
       </div>
 
-      <div class="projects-grid">
+      <div class="proj-switcher" id="projSwitcher">
+        <div class="proj-split">
+          <button type="button" class="proj-main" id="projMain" aria-label="Next category">
+            <i class="fa-solid fa-globe" id="projMainIcon"></i><span id="projMainLabel">Web Apps</span>
+          </button>
+          <button type="button" class="proj-more" id="projMore" aria-label="Choose category" aria-haspopup="true" aria-expanded="false">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="proj-menu" id="projMenu">
+          <button type="button" class="proj-opt active"><i class="fa-solid fa-globe"></i><span>Web Apps</span><span class="n">2</span></button>
+          <button type="button" class="proj-opt"><i class="fa-solid fa-puzzle-piece"></i><span>Plugins</span><span class="n">2</span></button>
+          <button type="button" class="proj-opt"><i class="fa-solid fa-shapes"></i><span>Others</span><span class="n">1</span></button>
+        </div>
+      </div>
+      <div class="proj-dots">
+        <button type="button" class="proj-dot active" aria-label="Web Apps"></button>
+        <button type="button" class="proj-dot" aria-label="Plugins"></button>
+        <button type="button" class="proj-dot" aria-label="Others"></button>
+      </div>
+
+      <div class="proj-panel active" data-panel="webapps">
         <!-- Jarvis AI Card -->
         <div class="project-card reveal delay-2">
           <div class="card-header">
@@ -1692,6 +1768,9 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="proj-panel" data-panel="plugins">
         <!-- AI Agent Acode Card -->
         <div class="project-card reveal delay-4">
           <div class="card-header">
@@ -1755,6 +1834,9 @@
             </a>
           </div>
         </div>
+      </div>
+
+      <div class="proj-panel" data-panel="others">
         <!-- Claude-Bridge Card -->
         <div class="project-card reveal delay-6">
           <div class="card-header">
@@ -1925,6 +2007,7 @@
       const slides = card.querySelectorAll('.slide');
       const dots   = card.querySelectorAll('.sdot');
       let current  = 0;
+      if (!slides.length) return; // text-only cards (plugins) have no screenshots
       function goTo(idx) {
         slides[current].classList.remove('active');
         dots[current].classList.remove('active');
@@ -1992,6 +2075,52 @@
       requestAnimationFrame(rafTick);
     }
     requestAnimationFrame(rafTick);
+
+    /* PROJECT CATEGORY SWITCHER */
+    (function () {
+      const sw = document.getElementById('projSwitcher');
+      if (!sw) return;
+      const panels = Array.from(document.querySelectorAll('.proj-panel'));
+      const opts = Array.from(sw.querySelectorAll('.proj-opt'));
+      const dots = Array.from(document.querySelectorAll('.proj-dot'));
+      const moreBtn = document.getElementById('projMore');
+      const mainIcon = document.getElementById('projMainIcon');
+      const mainLabel = document.getElementById('projMainLabel');
+      let cur = 0;
+      opts.forEach((o, i) => { o.querySelector('.n').textContent = panels[i].querySelectorAll('.project-card').length; });
+      function setMenu(open) {
+        sw.classList.toggle('open', open);
+        moreBtn.setAttribute('aria-expanded', String(open));
+      }
+      function show(i) {
+        cur = (i + panels.length) % panels.length;
+        panels.forEach((p, idx) => {
+          p.classList.toggle('active', idx === cur);
+          if (idx === cur) p.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        });
+        opts.forEach((o, idx) => o.classList.toggle('active', idx === cur));
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
+        mainIcon.className = opts[cur].querySelector('i').className;
+        mainLabel.textContent = opts[cur].querySelector('span').textContent;
+        setMenu(false);
+        const top = sw.getBoundingClientRect().top;
+        if (top < 90) window.scrollTo({ top: window.scrollY + top - 110, behavior: 'smooth' });
+      }
+      opts.forEach((o, i) => o.addEventListener('click', () => show(i)));
+      dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+      document.getElementById('projMain').addEventListener('click', () => show(cur + 1));
+      moreBtn.addEventListener('click', e => { e.stopPropagation(); setMenu(!sw.classList.contains('open')); });
+      document.addEventListener('click', e => { if (!sw.contains(e.target)) setMenu(false); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+      /* swipe left / right on the projects section to change category */
+      const area = document.getElementById('projects');
+      let sx = 0, sy = 0;
+      area.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      area.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.6) show(cur + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+    })();
 
     /* GSAP MENU */
     const toggle    = document.getElementById('menuToggle');

@@ -948,10 +948,10 @@
     .projects-grid { display: flex; flex-direction: column; gap: 32px; }
 
     /* Project category switcher (split pill + dots) */
-    .proj-switcher { position: relative; display: inline-block; margin-bottom: 22px; }
+    .proj-switcher { position: relative; display: inline-block; margin-bottom: 32px; }
     .proj-split { display: flex; gap: 3px; }
     .proj-main, .proj-more {
-      border: none; cursor: pointer; background: #e8e0f8; color: #2d1b69;
+      border: none; cursor: pointer; background: var(--text); color: #fff;
       font-family: 'Poppins', sans-serif;
       transition: background 0.2s ease, transform 0.15s ease;
     }
@@ -969,7 +969,7 @@
     }
     .proj-more i { transition: transform 0.25s var(--ease-out-expo); }
     .proj-switcher.open .proj-more i { transform: rotate(180deg); }
-    .proj-main:hover, .proj-more:hover { background: #ddd2f5; }
+    .proj-main:hover, .proj-more:hover { background: #2a2c30; }
     .proj-main:active, .proj-more:active { transform: scale(0.97); }
     .proj-menu {
       position: absolute; top: calc(100% + 8px); left: 0; min-width: 250px; z-index: 30;
@@ -985,18 +985,11 @@
       background: transparent; color: var(--text);
       font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 500;
     }
-    .proj-opt i { width: 18px; text-align: center; color: var(--accent); }
+    .proj-opt i { width: 18px; text-align: center; color: var(--text); }
     .proj-opt .n { margin-left: auto; font-size: 12px; color: #aaa; }
-    .proj-opt:hover { background: #f5f1fc; }
-    .proj-opt.active { background: #e8e0f8; color: #2d1b69; }
-    .proj-dots { display: flex; gap: 8px; margin-bottom: 32px; }
-    .proj-dot {
-      position: relative; width: 22px; height: 8px; padding: 0; border: none; border-radius: 4px;
-      background: #d9cef2; cursor: pointer;
-      transition: width 0.3s var(--ease-out-expo), background 0.3s;
-    }
-    .proj-dot::before { content: ''; position: absolute; inset: -12px -4px; }
-    .proj-dot.active { width: 44px; background: var(--accent); }
+    .proj-opt:hover { background: #f6f6f6; }
+    .proj-opt.active { background: var(--text); color: #fff; }
+    .proj-opt.active i { color: #fff; }
     .proj-panel { display: none; flex-direction: column; gap: 32px; }
     .proj-panel.active { display: flex; animation: projIn 0.45s var(--ease-out-expo); }
     @keyframes projIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -1653,11 +1646,6 @@
           <button type="button" class="proj-opt"><i class="fa-solid fa-shapes"></i><span>Others</span><span class="n">1</span></button>
         </div>
       </div>
-      <div class="proj-dots">
-        <button type="button" class="proj-dot active" aria-label="Web Apps"></button>
-        <button type="button" class="proj-dot" aria-label="Plugins"></button>
-        <button type="button" class="proj-dot" aria-label="Others"></button>
-      </div>
 
       <div class="proj-panel active" data-panel="webapps">
         <!-- Jarvis AI Card -->
@@ -2082,7 +2070,6 @@
       if (!sw) return;
       const panels = Array.from(document.querySelectorAll('.proj-panel'));
       const opts = Array.from(sw.querySelectorAll('.proj-opt'));
-      const dots = Array.from(document.querySelectorAll('.proj-dot'));
       const moreBtn = document.getElementById('projMore');
       const mainIcon = document.getElementById('projMainIcon');
       const mainLabel = document.getElementById('projMainLabel');
@@ -2099,7 +2086,6 @@
           if (idx === cur) p.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
         });
         opts.forEach((o, idx) => o.classList.toggle('active', idx === cur));
-        dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
         mainIcon.className = opts[cur].querySelector('i').className;
         mainLabel.textContent = opts[cur].querySelector('span').textContent;
         setMenu(false);
@@ -2107,7 +2093,6 @@
         if (top < 90) window.scrollTo({ top: window.scrollY + top - 110, behavior: 'smooth' });
       }
       opts.forEach((o, i) => o.addEventListener('click', () => show(i)));
-      dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
       document.getElementById('projMain').addEventListener('click', () => show(cur + 1));
       moreBtn.addEventListener('click', e => { e.stopPropagation(); setMenu(!sw.classList.contains('open')); });
       document.addEventListener('click', e => { if (!sw.contains(e.target)) setMenu(false); });
